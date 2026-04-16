@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import '../utils/app_theme.dart';
 import '../widgets/music_toggle_button.dart';
 import '../widgets/double_back_exit.dart';
 import 'level_map_screen.dart';
-import 'shop_screen.dart';
 import 'about_screen.dart';
 import 'settings_screen.dart';
+import 'privacy_policy_screen.dart';
 
 class MainMenuScreen extends StatefulWidget {
   const MainMenuScreen({super.key});
@@ -41,19 +42,25 @@ class _MainMenuScreenState extends State<MainMenuScreen>
         body: Stack(
           fit: StackFit.expand,
           children: [
-            // Background gradient (replace Container with Image.asset when bg image added)
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFF5F0FF),
-                    Color(0xFFEDE0FF),
-                    Color(0xFFFFEDF5),
-                    Color(0xFFE8F4FF),
-                  ],
-                  stops: [0.0, 0.35, 0.65, 1.0],
+            // Background image (place assets/images/menu_bg.png in project)
+            Positioned.fill(
+              child: Image.asset(
+                'assets/img_1.png',
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFFF5F0FF),
+                        Color(0xFFEDE0FF),
+                        Color(0xFFFFEDF5),
+                        Color(0xFFE8F4FF),
+                      ],
+                      stops: [0.0, 0.35, 0.65, 1.0],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -100,9 +107,16 @@ class _MainMenuScreenState extends State<MainMenuScreen>
                         ),
                         child: Column(
                           children: [
-                            Text('💎', style: const TextStyle(fontSize: 72))
-                                .animate()
-                                .scale(duration: 700.ms, curve: Curves.elasticOut),
+                             Center(
+                                    child: Lottie.asset(
+                                      'assets/diamond.json',
+                                      height: 200,
+                                      width: 200,
+                                      fit: BoxFit.cover,
+                                      repeat: true,
+                                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                                    ),
+                                  ),
                             const SizedBox(height: 8),
                             Text(
                               'CrystalPopperz',
@@ -146,16 +160,61 @@ class _MainMenuScreenState extends State<MainMenuScreen>
                         padding: const EdgeInsets.symmetric(horizontal: 32),
                         child: Row(
                           children: [
-                            Expanded(child: _secondaryButton(context, '🛍', 'Shop', () => Navigator.push(context, _route(const ShopScreen())), 200)),
+                            Expanded(child: _secondaryButton(context, 'ℹ️', 'About', () => Navigator.push(context, _route(const AboutScreen())), 200)),
                             const SizedBox(width: 10),
-                            Expanded(child: _secondaryButton(context, 'ℹ️', 'About', () => Navigator.push(context, _route(const AboutScreen())), 250)),
-                            const SizedBox(width: 10),
-                            Expanded(child: _secondaryButton(context, '⚙️', 'Settings', () => Navigator.push(context, _route(const SettingsScreen())), 300)),
+                            Expanded(child: _secondaryButton(context, '⚙️', 'Settings', () => Navigator.push(context, _route(const SettingsScreen())), 250)),
                           ],
                         ),
                       ),
 
-                      const SizedBox(height: 36),
+                      const SizedBox(height: 16),
+
+                      // Privacy Policy button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            _route(const PrivacyPolicyWebView()),
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.85),
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: AppColors.primary.withOpacity(0.2),
+                                width: 1.2,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.primary.withOpacity(0.08),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('🔒', style: TextStyle(fontSize: 16)),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Privacy Policy',
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ).animate(delay: 350.ms).fadeIn().slideY(begin: 0.2),
+                      ),
+
+                      const SizedBox(height: 20),
 
                       // Crystal showcase strip
                       _crystalStrip(),

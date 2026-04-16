@@ -52,18 +52,25 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          AnimatedBuilder(
-            animation: _bgController,
-            builder: (_, __) => Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color.lerp(const Color(0xFF6C3FC5), const Color(0xFF4A25A0), _bgController.value)!,
-                    Color.lerp(const Color(0xFFFF6B9D), const Color(0xFFFF9A3C), _bgController.value)!,
-                    Color.lerp(const Color(0xFF4D96FF), const Color(0xFF00D4FF), _bgController.value)!,
-                  ],
+          // Background image (place assets/images/splash_bg.png in project)
+          Positioned.fill(
+            child: Image.asset(
+              'assets/img.png',
+              fit: BoxFit.cover,
+              errorBuilder: (_, __, ___) => AnimatedBuilder(
+                animation: _bgController,
+                builder: (_, __) => Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.lerp(const Color(0xFF6C3FC5), const Color(0xFF4A25A0), _bgController.value)!,
+                        Color.lerp(const Color(0xFFFF6B9D), const Color(0xFFFF9A3C), _bgController.value)!,
+                        Color.lerp(const Color(0xFF4D96FF), const Color(0xFF00D4FF), _bgController.value)!,
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -86,12 +93,12 @@ class _SplashScreenState extends State<SplashScreen>
                       .asMap()
                       .entries
                       .map((e) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Text(e.value, style: const TextStyle(fontSize: 34))
-                                .animate(delay: (e.key * 100).ms)
-                                .scale(begin: const Offset(0, 0), duration: 500.ms, curve: Curves.elasticOut)
-                                .fadeIn(),
-                          ))
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Text(e.value, style: const TextStyle(fontSize: 34))
+                        .animate(delay: (e.key * 100).ms)
+                        .scale(begin: const Offset(0, 0), duration: 500.ms, curve: Curves.elasticOut)
+                        .fadeIn(),
+                  ))
                       .toList(),
                 ),
                 const SizedBox(height: 24),
@@ -131,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisSize: MainAxisSize.min,
                   children: List.generate(
                     5,
-                    (i) => Container(
+                        (i) => Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       width: 10,
                       height: 10,

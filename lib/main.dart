@@ -8,13 +8,11 @@ import 'screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Lock to portrait
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  // Status bar style
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
@@ -23,8 +21,32 @@ void main() async {
   runApp(const CrystalPopperz());
 }
 
-class CrystalPopperz extends StatelessWidget {
+class CrystalPopperz extends StatefulWidget {
   const CrystalPopperz({super.key});
+
+  @override
+  State<CrystalPopperz> createState() => _CrystalPopperZState();
+}
+
+class _CrystalPopperZState extends State<CrystalPopperz> {
+  late final AppLifecycleListener _lifecycleListener;
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycleListener = AppLifecycleListener(
+      onPause: () => AudioManager.instance.stopImmediately(),
+      onDetach: () => AudioManager.instance.stopImmediately(),
+      onHide: () => AudioManager.instance.stopImmediately(),
+      onResume: () => AudioManager.instance.resumeMusic(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycleListener.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

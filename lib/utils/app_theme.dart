@@ -121,6 +121,6 @@ class AppConstants {
   static const double cellSize = 44.0;
   static const double cellSpacing = 3.0;
   static const String appName = 'CrystalPopperz';
-  static const String developerName = 'CHRISTOPHER PAUL KENT';
-  static const String devEmail = 'Ikramullahkhan73902@gmail.com';
+  static const String developerName = 'Alvonso';
+  static const String devEmail = 'bitvavo2fa@gmail.com';
 }

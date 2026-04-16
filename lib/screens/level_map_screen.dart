@@ -65,7 +65,7 @@ class _LevelMapBody extends StatelessWidget {
                     crossAxisCount: 3,
                     mainAxisSpacing: 16,
                     crossAxisSpacing: 16,
-                    childAspectRatio: 0.9,
+                    childAspectRatio: 0.78,
                   ),
                   itemCount: levels.length,
                   itemBuilder: (context, i) {
@@ -82,9 +82,9 @@ class _LevelMapBody extends StatelessWidget {
                       delay: i * 50,
                       onTap: unlocked
                           ? () {
-                              state.loadLevel(level);
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => ChangeNotifierProvider.value(value: state, child: const GameplayScreen())));
-                            }
+                        state.loadLevel(level);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) => ChangeNotifierProvider.value(value: state, child: const GameplayScreen())));
+                      }
                           : null,
                     );
                   },
@@ -139,40 +139,43 @@ class _LevelCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(3, (i) => Text(
                 i < stars ? '⭐' : '☆',
-                style: TextStyle(fontSize: 15, color: i < stars ? Colors.amber : Colors.grey.shade400),
+                style: TextStyle(fontSize: 13, color: i < stars ? Colors.amber : Colors.grey.shade400),
               )),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: 4),
 
             // Lock / number
             unlocked
                 ? Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Color(0xFF9B6EF3), Color(0xFF6C3FC5)]),
-                      shape: BoxShape.circle,
-                      boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.35), blurRadius: 10, offset: const Offset(0, 4))],
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${level.levelNumber}',
-                        style: GoogleFonts.fredoka(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white),
-                      ),
-                    ),
-                  )
-                : const Text('🔒', style: TextStyle(fontSize: 36)),
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(colors: [Color(0xFF9B6EF3), Color(0xFF6C3FC5)]),
+                shape: BoxShape.circle,
+                boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(0.35), blurRadius: 10, offset: const Offset(0, 4))],
+              ),
+              child: Center(
+                child: Text(
+                  '${level.levelNumber}',
+                  style: GoogleFonts.fredoka(fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white),
+                ),
+              ),
+            )
+                : const Text('🔒', style: TextStyle(fontSize: 32)),
 
-            const SizedBox(height: 6),
-            Text(
-              level.title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.nunito(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: unlocked ? AppColors.textPrimary : Colors.grey,
+            const SizedBox(height: 4),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                level.title,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.nunito(
+                  fontSize: 8,
+                  fontWeight: FontWeight.w600,
+                  color: unlocked ? AppColors.textPrimary : Colors.grey,
+                ),
               ),
             ),
             if (unlocked && bestScore > 0) ...[

@@ -116,13 +116,6 @@ class _AudioSettingsRowState extends State<AudioSettingsRow> {
           value: _audio.musicEnabled,
           onChanged: (_) => _audio.toggleMusic(),
         ),
-        const SizedBox(height: 12),
-        _buildToggleRow(
-          label: 'Sound Effects',
-          emoji: _audio.sfxEnabled ? '🔊' : '🔈',
-          value: _audio.sfxEnabled,
-          onChanged: (_) => _audio.toggleSfx(),
-        ),
       ],
     );
   }

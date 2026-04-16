@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import '../utils/app_theme.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -53,7 +54,16 @@ class AboutScreen extends StatelessWidget {
                             BoxShadow(color: AppColors.primary.withOpacity(0.35), blurRadius: 24, offset: const Offset(0, 10)),
                           ],
                         ),
-                        child: const Center(child: Text('💎', style: TextStyle(fontSize: 56))),
+                        child: Center(
+                          child: Lottie.asset(
+                            'assets/diamond.json',
+                            height: 200,
+                            width: 200,
+                            fit: BoxFit.cover,
+                            repeat: true,
+                            errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                          ),
+                        ),
                       ).animate().scale(duration: 600.ms, curve: Curves.elasticOut),
 
                       const SizedBox(height: 20),
