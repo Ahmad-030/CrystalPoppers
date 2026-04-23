@@ -24,19 +24,17 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 3),
     )..repeat(reverse: true);
 
-    AudioManager.instance.init().then((_) {
-      Future.delayed(const Duration(milliseconds: 3000), () {
-        if (mounted) {
-          Navigator.of(context).pushReplacement(
-            PageRouteBuilder(
-              pageBuilder: (_, __, ___) => const MainMenuScreen(),
-              transitionsBuilder: (_, anim, __, child) =>
-                  FadeTransition(opacity: anim, child: child),
-              transitionDuration: const Duration(milliseconds: 600),
-            ),
-          );
-        }
-      });
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => const MainMenuScreen(),
+            transitionsBuilder: (_, anim, __, child) =>
+                FadeTransition(opacity: anim, child: child),
+            transitionDuration: const Duration(milliseconds: 600),
+          ),
+        );
+      }
     });
   }
 

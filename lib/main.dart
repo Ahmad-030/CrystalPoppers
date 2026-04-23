@@ -17,7 +17,7 @@ void main() async {
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
   ));
-
+  await AudioManager.instance.init();
   runApp(const CrystalPopperz());
 }
 
@@ -35,7 +35,6 @@ class _CrystalPopperZState extends State<CrystalPopperz> {
   void initState() {
     super.initState();
     _lifecycleListener = AppLifecycleListener(
-      onPause: () => AudioManager.instance.stopImmediately(),
       onDetach: () => AudioManager.instance.stopImmediately(),
       onHide: () => AudioManager.instance.stopImmediately(),
       onResume: () => AudioManager.instance.resumeMusic(),

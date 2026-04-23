@@ -27,35 +27,9 @@ class AudioManager extends ChangeNotifier {
 
     // Configure audio session so the OS knows this is game music.
     // When app loses focus or is force-killed, OS releases audio automatically.
-    final session = await AudioSession.instance;
-    await session.configure(const AudioSessionConfiguration(
-      avAudioSessionCategory: AVAudioSessionCategory.ambient,
-      avAudioSessionCategoryOptions:
-      AVAudioSessionCategoryOptions.mixWithOthers,
-      avAudioSessionMode: AVAudioSessionMode.defaultMode,
-      avAudioSessionRouteSharingPolicy:
-      AVAudioSessionRouteSharingPolicy.defaultPolicy,
-      avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
-      androidAudioAttributes: AndroidAudioAttributes(
-        contentType: AndroidAudioContentType.music,
-        flags: AndroidAudioFlags.none,
-        usage: AndroidAudioUsage.game,
-      ),
-      androidAudioFocusGainType:
-      AndroidAudioFocusGainType.gainTransientMayDuck,
-      androidWillPauseWhenDucked: true,
-    ));
+
 
     // Pause/resume on interruptions (phone calls, other apps stealing focus)
-    session.interruptionEventStream.listen((event) {
-      if (event.begin) {
-        _bgPlayer.pause();
-      } else {
-        if (_musicEnabled && event.type == AudioInterruptionType.pause) {
-          _bgPlayer.resume();
-        }
-      }
-    });
 
     final prefs = await SharedPreferences.getInstance();
     _musicEnabled = prefs.getBool('musicEnabled') ?? true;
